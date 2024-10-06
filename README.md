@@ -68,7 +68,7 @@ No external APIs will be used for the first project
     - A central page displaying an overview of all connected bank accounts and credit cards. Includes a summary of total balances, recent transactions, and a snapshot of progress toward financial goals. Users can see a consolidated view of their financial health at a glance.
 2. Transactions Page
     - A detailed breakdown of all transactions from different bank accounts and credit cards, searchable and filterable by date, account, or type of transaction. Users can categorize transactions and mark important payments.
-3. Goals & Budget Page
+3. Goals & Budget Page 
     - A page where users can set financial goals (e.g., saving for a car, paying off debt) and create a budget with AI assistance. It will show real-time progress toward their goals, with suggestions on how to adjust spending to meet those goals.
 4. Accounts Page
     - A management page for linking new bank accounts, credit cards, or loan accounts. Users can see which financial institutions are connected and remove or update account information.

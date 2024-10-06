@@ -1,0 +1,10 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'breakpointVars' as *;
+@use 'fonts' as *;
+
+* {
+    margin: 0px;
+    padding: 0.5em 0.25em 0;
+    box-sizing: border-box;
+}
