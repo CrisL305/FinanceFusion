@@ -24,7 +24,16 @@
 
 .font--normal {
     font-family: "SometypeMono";
-    font-size: 2em;
-    line-height: 1em;
     font-weight: 400;
+}
+
+.font--title{
+    font-family: "SometypeMono";
+    font-weight: 500;
+}
+
+.font--logo{
+    font-family: "SometypeMono";
+    font-weight: 700;
+    text-decoration: none;
 }

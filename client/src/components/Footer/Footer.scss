@@ -1,18 +1,34 @@
 @use '../../styles/partials/variables' as *;
 @use '../../styles/partials/mixins' as *;
-.header{
+.footer{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     flex-direction: column;
     background-color: $FinanceFusion-MidnightNavy;
     color: $FinanceFusion-CoolWhite;
-    height: 7em;
+    height: 7.5em;
 
     @include tablet {
         flex-direction: row;
+        height: 12em;
+    }
+    &--spacer{
+        padding-right: 1em;
+    }
+    &--title{
+        padding-bottom: 0.5em;
+        @include tablet{
+            font-size: 2em;
+        }
+    }
+    &--text{
+        padding-top: 0.75em;
+        font-size: 0.75em;
+        @include tablet{
+            font-size: 1.25em;
+        }
     }
     &__holder{
+        display: flex;
         &--logo{
             width: 100%;
             margin-left: auto;
@@ -24,22 +40,12 @@
         display: flex;
         justify-content: center;
         width: 100%;
-        @include tablet{
-            justify-content: left;
-        }
     }
     &__logo{
         width: 2.5em;
         &--name{
             padding-top: 0.75em;
             padding-left: 0.5em;
-            @include tablet{
-                padding-top: 0.25em;
-                font-size: 2em;
-            }
-        }
-        @include tablet{
-            width: 3em;
         }
     }
     &--btn{
@@ -47,9 +53,12 @@
         display: flex;
         justify-content: space-around;
         padding-bottom: 1em;
+    }
+    &--icon{
         @include tablet{
-            width: 50%;
-            padding-bottom: 0px;
+            width: 2em; 
+       height: 2em;
         }
+       
     }
 }
