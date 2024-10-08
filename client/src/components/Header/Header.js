@@ -1,7 +1,7 @@
 import "./Header.scss";
 import logo from '../../assets/logo/FFLogo.svg';
-import { Link } from "react-router-dom";
-import Btn from "../Btn/Btn";
+import { Link, NavLink } from "react-router-dom";
+
 
 const Header = () => {
     return (
@@ -15,11 +15,28 @@ const Header = () => {
                         </div>
                 </Link>
                 </div>
-                <div className="header--btn">
-                <Btn content={"Login"}/>
-                <Btn content={"Logout"}/>
-                </div>
-                
+                <nav className="">
+                    <NavLink 
+                        className={(navData) => 
+                            navData.isActive
+                            ? 'header__nav-link header__nav-link--active'
+                            : 'header__nav-link'
+                        }
+                        to="/"
+                        exact="true"
+                    >Home</NavLink>
+                </nav>
+                <NavLink
+                    className={(navData) =>
+                        navData.isActive
+                        ? 'header__nav-link header__nav-link--active'
+                        : 'header__nav-link'
+                    }
+                    to="/profile"
+                    exact="true"
+                    >
+                        Profile
+                    </NavLink>
             </div>
         </>    
      );
