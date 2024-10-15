@@ -113,7 +113,7 @@ const UserPageDetailed = ( ) => {
 
             {/* Budgets Section */}
             <section className='profile__budgets'>
-              <h3>{userData.username}'s Budgets <Link to='/budgets'><img src={chevron} alt='chevron icon' /></Link></h3>
+              <h3>{userData.username}'s Budgets <Link to={`/budgets/${id}`}><img src={chevron} alt='chevron icon' /></Link></h3>
               <ul>
                 {budgets.map((budget) => (
                   <li key={budget.budget_id}>
@@ -125,7 +125,7 @@ const UserPageDetailed = ( ) => {
 
             {/* Loan Section */}
             <section className='profile__loan'>
-              <h3>{userData.username}'s Loans <Link to='/loans'><img src={chevron} alt='chevron icon' /></Link></h3>
+              <h3>{userData.username}'s Loans <Link to={`/loans/${id}`}><img src={chevron} alt='chevron icon' /></Link></h3>
               <ul>
                 {loans.map((loan) => (
                   <li key={loan.loan_id}>
@@ -137,7 +137,7 @@ const UserPageDetailed = ( ) => {
 
             {/* Credit Score Section */}
             <section className='profile__loan'>
-              <h3>{userData.username}'s Credit Score <Link to='/creditScore'><img src={chevron} alt='chevron icon' /></Link></h3>
+              <h3>{userData.username}'s Credit Score <Link to={`/creditscores/${id}`}><img src={chevron} alt='chevron icon' /></Link></h3>
               <p><strong>{creditScore.current_score}</strong></p>
             </section>
 

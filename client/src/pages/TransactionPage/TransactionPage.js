@@ -10,6 +10,14 @@ import Edit from '../../assets/icons/arrow_drop_down.svg';
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
+const transactionFormFields = [
+  {name: 'amount', label: 'Amount', type: 'number'},
+  {name: 'transaction_type', label: 'Transaction Type', type: 'text'},
+  {name: 'category', label: 'Category', type: 'text'},
+  {name: 'description', label: 'Description', type: 'text'},
+  {name: 'date', label: 'Date', type: 'date'}
+]
+
 const TransactionPage = () => {
   const { id } = useParams();
   const [transactions, setTransactions] = useState([]);
@@ -55,14 +63,6 @@ const TransactionPage = () => {
     setSelectedTransaction(null);
   }
 
-  const formFields = [
-    {name: 'amount', label: 'Amount', type: 'number'},
-    {name: 'transaction_type', label: 'Transaction_type', type: 'text'},
-    {name: 'category', label: 'Category', type: 'text'},
-    {name: 'description', label: 'Description', type: 'text'},
-    {name: 'date', label: 'Date', type: 'date'}
-  ];
-
     return (
         <>
           <div>
@@ -86,7 +86,7 @@ const TransactionPage = () => {
                 <EditData
                   idType="transaction_id"
                   idValue={selectedTransaction.transaction_id}
-                  formFields={formFields}
+                  formFields={transactionFormFields}
                   endpoint={`/transactions/account/${id}`}
                   initialData={selectedTransaction}
                   onDataUpdated={() => {
@@ -100,7 +100,7 @@ const TransactionPage = () => {
             <AddData
               idType="account_id"
               idValue={id}
-              formFields={formFields}
+              formFields={transactionFormFields}
               endpoint="/transactions/account/"
               onDataAdded={fetchTransactions}
             />

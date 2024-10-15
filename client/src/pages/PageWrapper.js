@@ -21,10 +21,10 @@ const PageWrapper = () => {
             <Route path="/profile" element={<ProfilePage />}/>
             <Route path="/profile/users/:id" element={<UserPageDetailed />}/>
             <Route path="/accounts/:id" element={<AccountDetailsPage />}/>
-            <Route path="/creditScore" element={<CreditScorePage/>}/>
+            <Route path="/creditscores/:id" element={<CreditScorePage/>}/>
             <Route path="/goals/:id" element={<GoalsPage/>}/>
-            <Route path="/budgets" element={<BudgetPage/>}/>
-            <Route path="/loans" element={<LoanPage/>}/>
+            <Route path="/budgets/:id" element={<BudgetPage/>}/>
+            <Route path="/loans/:id" element={<LoanPage/>}/>
             <Route path="/transactions/:id" element={<TransactionPage/>}/>
             <Route path="*" element={<NotFound/>}/>
         </Routes>
