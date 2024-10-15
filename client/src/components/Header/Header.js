@@ -19,8 +19,8 @@ const Header = () => {
                     <NavLink 
                         className={(navData) => 
                             navData.isActive
-                            ? 'header__nav-link header__nav-link--active'
-                            : 'header__nav-link'
+                            ? 'header__link header__link--active'
+                            : 'header__link'
                         }
                         to="/"
                         exact="true"
@@ -29,8 +29,8 @@ const Header = () => {
                 <NavLink
                     className={(navData) =>
                         navData.isActive
-                        ? 'header__nav-link header__nav-link--active'
-                        : 'header__nav-link'
+                        ? 'header__link header__link--active'
+                        : 'header__link'
                     }
                     to="/profile"
                     exact="true"

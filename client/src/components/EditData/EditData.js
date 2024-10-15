@@ -1,19 +1,36 @@
 import axios from "axios";
 import { forwardRef, useEffect, useState } from "react";
 
-const EditData = forwardRef(({ idType, idValue, endpoint, initialData, onDataUpdated }, ref) => {
+const EditData = forwardRef(({ idType, idValue, endpoint, initialData, formFields, onDataUpdated }, ref) => {
 
     const SERVER_URL = process.env.REACT_APP_SERVER_URL;
     const [formData, setFormData] = useState({
         ...initialData,
     });
+    
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        if (initialData) {
+            const formattedData = { ...initialData };
+            if (formattedData.score_history) {
+                formattedData.score_history = JSON.stringify(formattedData.score_history, null, 2);
+            }
+
+            formFields.forEach(field => {
+                if (field.type === 'date' && formattedData[field.name]) {
+                    formattedData[field.name] = formatDate(formattedData[field.name]);
+                }
+            });
+
+            setFormData(formattedData);
+        }
+    }, [initialData, formFields])
 
     //Helper function to format date to "yyyy-MM-dd"
     const formatDate = (dateString) => {
         const date = new Date(dateString).toISOString().split('T')[0];
-        console.log(date);
         return date
     }
 
@@ -32,11 +49,17 @@ const EditData = forwardRef(({ idType, idValue, endpoint, initialData, onDataUpd
         setError('');
 
         try{
+
             const dataToSubmit = {
                 [idType]: idValue,
-                account_id: formData.account_id,
-                ...formData,
+                ...formData
             };
+
+            formFields.forEach((field) => {
+                if (field.name === 'score_history' && formData[field.name]) {
+                    dataToSubmit[field.name] = JSON.parse(formData[field.name]);
+                }
+            })
 
             const response = await axios.put(`${SERVER_URL}${endpoint}/${idValue}`, dataToSubmit);
 
@@ -52,54 +75,32 @@ const EditData = forwardRef(({ idType, idValue, endpoint, initialData, onDataUpd
         setLoading(false);
     };
 
-    const formDataFields = [
-        {
-            title: "Amount",
-            name: "amount",
-            type: "number",
-            value: formData.amount,
-        },
-        {
-            title: "Transaction Name",
-            name: "transaction_type",
-            type: "text",
-            value: formData.transaction_type,
-        },
-        {
-            title: "Category",
-            name: "category",
-            type: "text",
-            value: formData.category,
-        },
-        {
-            title: "Description",
-            name: "description",
-            type: "text",
-            value: formData.description,
-        },
-        {
-            title: "Date",
-            name: "date",
-            type: "date",
-            value: formData.date ? formatDate(formData.date) : "",
-        }
-    ];
-
     return ( 
         <div>
             <h3>Edit Data</h3>
             <form ref={ref} onSubmit={handleSubmit}>
-                {formDataFields.map((field)=>(
+                {formFields.map((field)=>(
                     <div key={field.name}>
-                        <label htmlFor={field.name}>{field.name}</label>
-                        <input
+                        <label htmlFor={field.name}>{field.label}</label>
+                        {field.name === 'score_history' ? (
+                            <textarea
+                                id={field.name}
+                                name={field.name}
+                                value={formData[field.name] || ''}
+                                onChange={handleChange}
+                                rows="5"
+                                required
+                            />
+                        ): (
+                            <input
                             type={field.type || 'text'}
                             id={field.name}
                             name={field.name}
-                            value={field.value || ''}
+                            value={formData[field.name] || ''}
                             onChange={handleChange}
                             required
                         />
+                        )}
                     </div>
                 ))}
 
