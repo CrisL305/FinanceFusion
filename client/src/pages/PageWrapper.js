@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation, useParams } from "react-router-dom";
 import Header from "../components/Header/Header";
 import HomePage from "./HomePage/HomePage";
 import LoanPage from "./LoanPage/LoanPage";
@@ -11,11 +11,32 @@ import BudgetPage from "./BudgetPage/BudgetPage";
 import CreditScorePage from "./CreditScoresPage/CreditScoresPage";
 import AccountDetailsPage from "./AccountPage/AccountDetailPage";
 import UserPageDetailed from "./UserPage/UserPageDetailed";
+import BottomNavBar from "../components/BottomNavBar/BottomNavBar";
+import { useContext } from "react";
+import { UserContext, UserProvider } from "../context/UserContext";
+
 
 const PageWrapper = () => {
+    const location = useLocation();
+    const { id } = useContext(UserContext); 
+
+    //Defines the pages where the bottom navigation should appear
+    const showNavBar = [
+        "/accounts", 
+        "/transactions", 
+        "/goals", 
+        "/budgets", 
+        "/loans", 
+        "/creditscores"
+    ].some((path) => location.pathname.startsWith(path));
+
+    console.log(showNavBar);
+    console.log(location.pathname);
+
     return (  
         <>
         <Header />
+        <UserProvider>
         <Routes>
             <Route path="/" element={<HomePage />}/>
             <Route path="/profile" element={<ProfilePage />}/>
@@ -28,6 +49,10 @@ const PageWrapper = () => {
             <Route path="/transactions/:id" element={<TransactionPage/>}/>
             <Route path="*" element={<NotFound/>}/>
         </Routes>
+        
+        {/* Conditionally render the BottomNavBar */}
+        {showNavBar && <BottomNavBar id={id} />}
+        </UserProvider>
         <Footer/>
         </>
     );

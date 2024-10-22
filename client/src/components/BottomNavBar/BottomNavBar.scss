@@ -1,0 +1,40 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+
+.bottomNav{
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        height: 2em;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 0.75em;
+        background-color: $FinanceFusion-MidnightNavy;
+        @include tablet{
+            font-size: 1.25em;
+        }
+        @include desktop{
+            font-size: 2em;
+            height: 3em;
+        }
+    &__list{
+        display: flex;
+        flex-direction: row;
+        list-style: none;
+
+    }
+    &__item{
+        padding: 0.25em;
+        color: $FinanceFusion-WarmGold;
+        &:hover{
+            color: $FinanceFusion-CoolWhite;
+        }
+    }
+
+}
+
+.stopAtFooter {
+    transform: translateY(100%);
+}

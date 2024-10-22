@@ -12,6 +12,8 @@
 body{
     background-color: lighten($FinanceFusion-DarkGray, 15%);
     line-height: 1.6;
+    opacity: 1;
+    transition: opacity 0.8s ease-in;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -105,12 +107,20 @@ h1, h2, h3, h4, h5, h6 {
         height: 1em;} 
     }
     &__delete{
+        color: $FinanceFusion-WarmGold;
+        cursor: pointer;
         @include tablet{
-            font-size: 3vw;
+            font-size: 1em;
         }
     }
     &__edit{
+        color: $FinanceFusion-WarmGold;
+        cursor: pointer;
         @include tablet 
-        {font-size: 3vw;}
+        {font-size: 1em;}
     }
+}
+
+a {
+    text-decoration: none;
 }

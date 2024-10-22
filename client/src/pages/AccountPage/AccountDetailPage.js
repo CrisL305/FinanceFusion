@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DeleteBtn from '../../assets/icons/delete.svg';
 import Edit from '../../assets/icons/arrow_drop_down.svg';
@@ -9,11 +9,13 @@ import EditData from "../../components/EditData/EditData";
 import CollapsibleAccount from "../../components/CollapsibleAccount/CollapsibleAccount";
 import "./AccountDetailPage.scss";
 import Graph from "../../components/Graph/Graph";
+import { UserContext } from "../../context/UserContext";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const AccountDetailsPage = () => {
     const { id} = useParams();
+    const { setId } = useContext(UserContext);
     const [accounts, setAccounts] = useState(null);
     const [selectedAccount, setSelectedAccount] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -30,6 +32,7 @@ const AccountDetailsPage = () => {
     };
 
     useEffect(()=> {
+        setId(id);
         const fetchUserData = async () => {
             try{
     //fetch user transactions
@@ -40,7 +43,7 @@ const AccountDetailsPage = () => {
         }
         } ;
         fetchUserData();
-    }, []);
+    }, [id]);
     //Fields for editing an account
     const accountFormFields = [
         {name: 'bank_name', label: 'Bank Name', type: 'text'},
