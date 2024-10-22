@@ -1,0 +1,13 @@
+@use "../../styles/partials/mixins" as *;
+
+.transactionPage{
+    &__holder{
+        padding: 1em 2em;
+    }
+    &__listHolder{
+        list-style: none;
+    }
+    &__list{
+        margin-bottom: 1em;
+    }
+}

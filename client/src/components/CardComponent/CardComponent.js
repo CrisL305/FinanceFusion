@@ -10,7 +10,7 @@ const UserCard = ({ id, content, linkPath }) => {
     };
 
     return(
-      <div className="card" onClick={handleClick}>
+      <div className="card font--normal" onClick={handleClick}>
         <h3>{content}</h3>
         <p>Click to vew details</p>
       </div>

@@ -11,6 +11,7 @@
 
     @include tablet {
         flex-direction: row;
+        height: 10em;
     }
     &__holder{
         &--logo{
@@ -20,7 +21,7 @@
         }
     }
     &__link{
-        color: $FinanceFusion-CoolWhite;
+        color: black;
         display: flex;
         justify-content: center;
         width: 100%;
@@ -37,8 +38,9 @@
         &--name{
             padding-top: 0.75em;
             padding-left: 0.5em;
+            color: $FinanceFusion-CoolWhite;
             @include tablet{
-                padding-top: 0.25em;
+                padding-top: 0.15em;
                 font-size: 2em;
             }
         }
@@ -46,14 +48,47 @@
             width: 3em;
         }
     }
-    &--btn{
+    &__holder{
+        display: flex;
+        flex-direction: row;
         width: 100%;
+        justify-content: space-between;
+    }
+    &--btn{
+        width: 45%;
         display: flex;
         justify-content: space-around;
-        padding-bottom: 1em;
+        align-items: center;
+        border-radius: 8px;
+        height: 1.5em;
+        background-color: $FinanceFusion-CoolWhite;
+        border: none;
+        &:hover {
+            cursor: pointer;
+            background-color: $FinanceFusion-DarkGray;
+        }
         @include tablet{
             width: 50%;
             padding-bottom: 0px;
+            margin: 0 0.25em 0 0.25em;
+            font-size: 1em;
+        }
+        @include desktop{
+            margin: 0 1em 0 1em;
+            height: 1.75em;
+            align-items: center;
+            font-size: 1.5em;
+        }
+    }
+    &--btn--bottom{
+        margin-bottom: 1em;
+        @include tablet{
+            margin-bottom: 0;
+        }
+    }
+    &__customBtn{
+        @include tablet{
+            justify-content: center;
         }
     }
 }

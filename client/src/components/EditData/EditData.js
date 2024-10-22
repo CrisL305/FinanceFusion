@@ -1,5 +1,6 @@
 import axios from "axios";
 import { forwardRef, useEffect, useState } from "react";
+import "./EditData.scss";
 
 const EditData = forwardRef(({ idType, idValue, endpoint, initialData, formFields, onDataUpdated }, ref) => {
 
@@ -76,14 +77,15 @@ const EditData = forwardRef(({ idType, idValue, endpoint, initialData, formField
     };
 
     return ( 
-        <div>
-            <h3>Edit Data</h3>
-            <form ref={ref} onSubmit={handleSubmit}>
+        <div className="editData__holder font--normal">
+            <h3 className="editData__title font--title">Edit Data</h3>
+            <form className="editData__form" ref={ref} onSubmit={handleSubmit}>
                 {formFields.map((field)=>(
-                    <div key={field.name}>
-                        <label htmlFor={field.name}>{field.label}</label>
+                    <div className="editData__column" key={field.name}>
+                        <label className="editData__label" htmlFor={field.name}>{field.label}</label>
                         {field.name === 'score_history' ? (
-                            <textarea
+                            <textarea 
+                                className="editData__input font--normal"
                                 id={field.name}
                                 name={field.name}
                                 value={formData[field.name] || ''}
@@ -93,6 +95,7 @@ const EditData = forwardRef(({ idType, idValue, endpoint, initialData, formField
                             />
                         ): (
                             <input
+                            className="editData__input font--normal"
                             type={field.type || 'text'}
                             id={field.name}
                             name={field.name}
@@ -105,10 +108,11 @@ const EditData = forwardRef(({ idType, idValue, endpoint, initialData, formField
                 ))}
 
                 {error && <p style={{color: 'red'}}>{error}</p>}
-
-                <button type="submit" disabled={loading}>
+                <div className="editData__holder">
+                <button className="editData__button font--normal" type="submit" disabled={loading}>
                     {loading ? 'Updating...' : 'Update Data'}
                 </button>
+                </div>
             </form>
         </div>
         );

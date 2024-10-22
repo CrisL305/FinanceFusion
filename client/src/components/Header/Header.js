@@ -15,28 +15,33 @@ const Header = () => {
                         </div>
                 </Link>
                 </div>
-                <nav className="">
+                <div className="header__holder">
+                <nav className="header--btn font--title">
                     <NavLink 
                         className={(navData) => 
                             navData.isActive
-                            ? 'header__link header__link--active'
-                            : 'header__link'
+                            ? 'header__link header__customBtn header__link--active'
+                            : 'header__link header__customBtn'
                         }
                         to="/"
                         exact="true"
                     >Home</NavLink>
                 </nav>
+                <nav className="header--btn font--title header--btn--bottom">
                 <NavLink
                     className={(navData) =>
                         navData.isActive
-                        ? 'header__link header__link--active'
-                        : 'header__link'
+                        ? 'header__link header__customBtn header__link--active'
+                        : 'header__link header__customBtn'
                     }
                     to="/profile"
                     exact="true"
                     >
                         Profile
                     </NavLink>
+                </nav>
+                </div>
+               
             </div>
         </>    
      );

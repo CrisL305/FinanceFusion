@@ -1,0 +1,85 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.accountDetails{
+    &__holder{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    @include desktop {
+        font-size: 2vw;
+    }
+    }
+    &__header{
+        margin: 1em 0 -1em;
+
+    }
+}
+
+.filter{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+    width: 100%;
+    
+    &__select{
+        padding: 0.25em;
+        border: 1px solid $FinanceFusion-DarkGray;
+        border-radius: 6px;
+        font-size: 1em;
+        background-color: #fff;
+        transition: border-color 0.3s ease;
+        margin-left: 0.5em;
+        min-width: 120px;
+        &:focus{
+            border-color: $FinanceFusion-WarmGold;
+            outline: none;
+        }
+        &:hover{
+            border-color: darken($FinanceFusion-MidnightNavy, 10%);
+        }
+    }
+    &__input{
+        padding: 0.25em;
+        border: 1px solid $FinanceFusion-DarkGray;
+        border-radius: 6px;
+        font-size: 1em;
+        background-color: #fff;
+        transition: border-color 0.3s ease;
+        width: 100%;
+        &:focus{
+            border-color: $FinanceFusion-WarmGold;
+            outline: none;
+        }
+        &:hover{
+            border-color: darken($FinanceFusion-MidnightNavy, 10%);
+        }
+        @include desktop {
+            font-size: 3vw;
+        }
+    }
+    &__holder{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 1em;
+        @include tablet {
+            font-size: 1.5em;
+        }
+    }
+}
+
+.account{
+    &__header{
+        @include tablet
+        {font-size: 2em;}
+    }
+    &__details{
+       @include tablet 
+       {font-size: 1.75em;}
+    }
+}
+

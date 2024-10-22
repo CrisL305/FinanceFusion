@@ -1,0 +1,20 @@
+@use "../../styles/partials/mixins" as *;
+
+.creditData{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+   &__holder{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    @include tablet{
+        font-size: 1.5em;
+    }
+    @include desktop {
+        font-size: 3vw;
+    }
+   }
+}

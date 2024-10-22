@@ -6,6 +6,9 @@ import Edit from '../../assets/icons/arrow_drop_down.svg';
 import AddData from "../../components/AddData/AddData";
 import Modal from "../../components/Modal/Modal";
 import EditData from "../../components/EditData/EditData";
+import CollapsibleAccount from "../../components/CollapsibleAccount/CollapsibleAccount";
+import "./AccountDetailPage.scss";
+import Graph from "../../components/Graph/Graph";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -16,7 +19,28 @@ const AccountDetailsPage = () => {
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [error, setError] = useState('');
+    const [transactions, setTransactions] = useState(null);
+    const [filter, setFilter] = useState("");
 
+    const transformAccountData = (accounts) => {
+        return accounts.map((account) => ({
+            name: account.bank_name,
+            value: Number(account.balance) || 0,
+        }));
+    };
+
+    useEffect(()=> {
+        const fetchUserData = async () => {
+            try{
+    //fetch user transactions
+    const transactionsResponse = await axios.get(`${SERVER_URL}/transactions/account/${id}`);
+    setTransactions(transactionsResponse.data);
+        } catch (error) {
+            console.log(error)
+        }
+        } ;
+        fetchUserData();
+    }, []);
     //Fields for editing an account
     const accountFormFields = [
         {name: 'bank_name', label: 'Bank Name', type: 'text'},
@@ -73,21 +97,43 @@ const AccountDetailsPage = () => {
         return <p>{error}</p>
     }
 
+    const pieChartData = transformAccountData(accounts).filter((account) => account.value >= 0);
+
+    const filteredAccounts = filter
+        ? accounts.filter((account) => account.account_type === filter)
+        : accounts;
+
     return ( 
         <div>
-            <h2>Account Details</h2>
+            <h2 className="headerDefault font--title">Account Details</h2>
+            <div>
+                    <Graph
+                        type="pie"
+                        data={pieChartData}
+                        dataKey="value"
+                        colors={['#2C3E50', '#F39C12', 'Blue']}
+                    />
+                </div>
             {accounts ? (
                 <>
+                <div className="filter__holder">
+                <div>
+                    <select className="filter__input font--normal" onChange={(e) => setFilter(e.target.value)}>
+                        <option className="filter__select" value="">All Accounts</option>
+                        <option className="filter__select" value="Savings">Savings</option>
+                        <option className="filter__select" value="Checking">Checking</option>
+                        <option className="filter__select" value="Credit Card">Credit</option>
+                    </select>
+                </div>
+                </div>
                 <ul>
-                {accounts.map((account) => (
-                    <li key={account.account_id}>
-                        <p>Bank: {account.bank_name}</p>
-                    <p>Account Type: {account.account_type}</p>
-                    <p>Balance: ${account.balance}</p>
-                    <div onClick={() => {handleAccountClick(account.account_id)}}>
-                      <img src={DeleteBtn} alt="delete button" />Delete This Account</div>
-                    <div onClick={() => {handleEditClick(account)}}>
-                      <img src={Edit} alt="edit button" />Edit this Account</div>
+                {filteredAccounts.map((account) => (
+                    <li className="accountDetails__holder" key={account.account_id}>
+                        <CollapsibleAccount account={account} transactions={transactions} />
+                        <div className="details__delete" onClick={() => {handleAccountClick(account.account_id)}}>
+                      <img className="details__icon" src={DeleteBtn} alt="delete button" />Delete This Account</div>
+                    <div className="details__edit" onClick={() => {handleEditClick(account)}}>
+                      <img className="details__icon" src={Edit} alt="edit button" />Edit this Account</div>
                     </li>
                 ))}
                 </ul>

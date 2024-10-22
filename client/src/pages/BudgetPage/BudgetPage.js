@@ -6,13 +6,15 @@ import Modal from "../../components/Modal/Modal";
 import EditData from "../../components/EditData/EditData";
 import AddData from "../../components/AddData/AddData";
 import axios from "axios";
+import Graph from "../../components/Graph/Graph";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const BudgetPage = () => {
     const { id } = useParams();
-    const [budgets, setBudgets] = useState({});
-    const [selectedBudget, setSelectedBudget] = useState(null)
+    const [budgets, setBudgets] = useState([]);
+    const [selectedBudget, setSelectedBudget] = useState(null);
+    const [totalBudgeted, setTotalBudget] = useState(0);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -28,7 +30,9 @@ const BudgetPage = () => {
         try {
             const budgetResponse = await axios.get(`${SERVER_URL}/budgets/${id}`);
             setBudgets(budgetResponse.data);
+            setTotalBudget(budgetResponse.data.reduce((acc, budget) => acc + Number(budget.budgeted_amount), 0));
             setLoading(false);
+            console.log(totalBudgeted);
         } catch (error) {
             alert('Error fetching budget details', error);
             setLoading(false);
@@ -43,7 +47,7 @@ const BudgetPage = () => {
     //Delete budget for the current user
     const deleteBudgets = async (budget_id) => {
         try{
-        const response = await axios.delete(`${SERVER_URL}/budgets/${id}/${budget_id}`);
+        await axios.delete(`${SERVER_URL}/budgets/${id}/${budget_id}`);
         fetchBudgets();
     } catch (error) {
         alert('Error deleting budget:', error);
@@ -67,27 +71,46 @@ const BudgetPage = () => {
         setSelectedBudget(null);
     }
 
+    const pieChartData = budgets.map((budget) => ({
+        name: budget.category,
+        value: Number(totalBudgeted > 0
+        ? ((budget.budgeted_amount / totalBudgeted) * 100).toFixed(2)
+        : 0),
+    }));
+
     if (loading) {
         return <p>Loading account details...</p>
     }
     
     return ( 
-        <div>
-            <h2>Budget Details</h2>
+        <div className="pageDefault__holder">
+            <h2 className="headerDefault font--title">Budget Details</h2>
+            
+            <div style={{display: "flex", justifyContent: "center", marginBottom: -25}}>
+                <label className="font--title">Total Budget: ${totalBudgeted}</label>
+            </div>
+
+            <Graph
+                type="pie"
+                data={pieChartData}
+                dataKey="value"
+                xAxisKey="name"
+            />
+
             {budgets ? (
                 <>
-                    <ul>
+                    <ul className="pagePadding font--normal pageDefault__listHolder">
                         {budgets.map((budget) => (
-                            <li key={budget.budget_id}>
+                            <li className="pageDefault__list" key={budget.budget_id}>
                                 <p>Category: {budget.category}</p>
                                 <p>Amount Budgeted: {budget.budgeted_amount}</p>
                                 <p>Total Amount Spent: {budget.actual_spent}</p>
                                 <p>Total Left Over: {budget.budgeted_amount - budget.actual_spent}</p>
-                                <div onClick={() => {handleBudgetDelete(budget.budget_id)}}>
-                                    <img src={DeleteBtn} alt="delete_button" /> Delete This Budget
+                                <div className="details__delete" onClick={() => {handleBudgetDelete(budget.budget_id)}}>
+                                    <img className="details__icon" src={DeleteBtn} alt="delete_button" /> Delete This Budget
                                 </div>
-                                <div onClick={() => {handleBudgetEdit(budget)}}>
-                                    <img src={Edit} alt="edit_button" /> Edit This Budget
+                                <div className="details__edit" onClick={() => {handleBudgetEdit(budget)}}>
+                                    <img className="details__icon" src={Edit} alt="edit_button" /> Edit This Budget
                                 </div>
                             </li>
                         ))}
