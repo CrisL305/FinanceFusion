@@ -41,12 +41,14 @@
         align-items: center;
         flex-direction: column;
         width: 100%;
+        height: 20em;
         @include tablet{
             font-size: 1.5em;
             flex-direction: row;
             width: 100%;
             flex-wrap: wrap;
             justify-content: left;
+            height: 14em;
         }
         @include desktop{
             font-size: 2.5em;
@@ -54,9 +56,12 @@
     }
 
     &__label{
-        font-size: 0.75em;
+        font-size: 0.6em;
         color: $FinanceFusion-WarmGold;
         margin: 0.5em 0;
+        @include tablet{
+            font-size: 0.75em;
+        }
     }
 
     &__input {
@@ -65,7 +70,7 @@
         border: 1px solid #CCC;
         border-radius: 8px;
         margin-bottom: 1em;
-        font-size: 0.75em;
+        font-size: 0.5em;
         background-color: $FinanceFusion-DarkGray;
         transition: border-color 0.3s ease;
         width: 150%;
@@ -76,6 +81,7 @@
         }
         @include tablet{
             width: 100%;
+            font-size: 0.75em
         }
     }
 

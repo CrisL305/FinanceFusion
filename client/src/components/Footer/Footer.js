@@ -5,7 +5,7 @@ import twitter from "../../assets/icons/Icon-twitter.svg";
 import "./Footer.scss";
 const Footer = () => {
     return ( 
-        <footer className="footer pagePadding">
+        <footer id="footer" className="footer pagePadding">
             <nav>
                 <div>
                     <h2 className="footer--title font--title">Get in Touch</h2>

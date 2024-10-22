@@ -52,7 +52,7 @@ const Graph = ({ type, data, dataKey, xAxisKey, yAxisKey}) => {
                 );
             case 'pie':
                 return (
-                    <PieChart width={300} height={300}>
+                    <PieChart width={400} height={300}>
                         <Pie
                             data={data}
                             dataKey={dataKey}
