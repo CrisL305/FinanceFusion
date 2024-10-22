@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Btn from '../../components/Btn/Btn';
 import UserCard from '../../components/CardComponent/CardComponent';
+import "./ProfilePage.scss";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -56,28 +57,29 @@ const ProfilePage = () => {
   };
   
   return (
-    <div className="profile-page">
-      <h1>Profile Page</h1>
+    <div className="textDefault profilePage pagePadding">
       {/* If user is logged in, render their profile information */}
       {isLoggedIn ? (
         profileData && (
           <>
-            <h2>Hello, {profileData.username}</h2>
-            <h3>Registered since: {formatDate(profileData.updated_at)}</h3>
-            <img
-              className="profile-page__avatar"
-              src={profileData.avatar_url}
-              alt={`${profileData.username} avatar`}
-            />
-            <div className="profile-page__logout-wrapper">
+            <h1 className='textDefault__title font--middle' >Hello, {profileData.username}</h1>
+            <div className='profilePage__holder'>
+              <h3 className='textDefault__paragraph profilePage__userText font--normal'>Registered since: {formatDate(profileData.updated_at)}</h3>
+              <img
+                className="profilePage__userProfile"
+                src={profileData.avatar_url}
+                alt={`${profileData.username} avatar`}
+              />
+            </div>
+            <div className="textDefault__paragraph profilePage__holder font--normal">
               {/* Render a logout button */}
-              <Btn content="Logout" login={false} logout={true}/>
+              <Btn className="profilePage__btn" content="Logout" login={false} logout={true}/>
             </div>
             {/* Display user cards for selection if no user is selected yet */}
                 <div className='user-selection'>
-                <h2>Select a user to view data:</h2>
+                <h2 className='font--title'>Select a user to view</h2>
                   {users.map((user) => (
-                    <div key={user.userId} className='user-cards'>
+                    <div key={user.id} className='users'>
                     <UserCard 
                     id={user.id}
                     userId={user.id}
@@ -91,10 +93,10 @@ const ProfilePage = () => {
         )
       ) : (
         <>
-          <p>
+          <p className="textDefault__paragraph font--normal">
             <strong>This page requires authentication.</strong>
           </p>
-          <Btn content="Login with Github" login={true} logout={false} />
+          <Btn className={"textDefault__paragraph font--normal"} content="Login with Github" login={true} logout={false} />
         </>
       )}
     </div>

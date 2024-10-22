@@ -1,0 +1,25 @@
+@use "../../styles/partials/variables" as *;
+
+.home{
+    &__image{
+        height: 20em;
+        width: 100%;
+    }
+    &__paragraph{
+        text-align: center;
+        font-size: 1.25em;
+    }
+    &__login{
+        background-color: $FinanceFusion-DarkGray;
+        &:hover{
+            background-color: $FinanceFusion-WarmGold;
+        }
+        &--holder{
+            margin-top: -6em;
+            margin-bottom: 2em;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+    }
+}

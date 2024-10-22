@@ -1,0 +1,31 @@
+<svg width="400" height="800" viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg">
+
+   <!-- Gold Circle on the Back -->
+  <circle cx="200" cy="400" r="300" fill="gold"/>
+  
+  <!-- Phone Body -->
+  <rect x="50" y="50" width="300" height="600" rx="30" ry="30" 
+        fill="white" stroke="black" stroke-width="4" />
+  
+  <!-- Screen -->
+  <rect x="70" y="100" width="260" height="500" rx="20" ry="20" 
+        fill="gray" />
+
+  <!-- 4 Tabs -->
+  <rect x="80" y="120" width="50" height="30" rx="5" ry="5" fill="white" stroke="black" />
+  <rect x="140" y="120" width="50" height="30" rx="5" ry="5" fill="white" stroke="black" />
+  <rect x="200" y="120" width="50" height="30" rx="5" ry="5" fill="white" stroke="black" />
+  <rect x="260" y="120" width="50" height="30" rx="5" ry="5" fill="white" stroke="black" />
+
+  <!-- Savings Label -->
+  <text x="200" y="300" font-size="24" font-family="Arial" text-anchor="middle" fill="black">
+    Savings: $20,000
+  </text>
+
+  <!-- Line Chart -->
+  <polyline points="80,450 140,400 200,420 260,380 320" 
+            fill="none" stroke="#d4af37" stroke-width="3" />
+  
+  <!-- X-Axis Line -->
+  <line x1="80" y1="450" x2="320" y2="450" stroke="black" stroke-width="2" />
+</svg>

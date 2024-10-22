@@ -1,11 +1,11 @@
 import "./Btn.scss";
-const Btn = ( {content, login, logout} ) => {
+const Btn = ( {className, content, login, logout} ) => {
 
     const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
         if (login === true && logout === false) {
             return (
-                <a className="btnStyle" href={`${SERVER_URL}/auth/github`}>
+                <a className={`btnStyle ${className}`} href={`${SERVER_URL}/auth/github`}>
             <span className="">{content}</span>
         </a>
             )
@@ -15,7 +15,7 @@ const Btn = ( {content, login, logout} ) => {
             return(
                 <>
  {/* The link will take user to `http://localhost:5050/auth/logout` which will delete the user server session and redirect user back to client-side app with the cookie invalidated*/}
- <a className="btnStyle" href={`${SERVER_URL}/auth/logout`}>
+ <a className={`btnStyle ${className}`} href={`${SERVER_URL}/auth/logout`}>
  <span className="">{content}</span>
 </a>
 </>

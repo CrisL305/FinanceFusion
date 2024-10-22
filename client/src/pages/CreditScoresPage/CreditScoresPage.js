@@ -6,6 +6,7 @@ import Edit from "../../assets/icons/arrow_drop_down.svg";
 import EditData from "../../components/EditData/EditData";
 import AddData from "../../components/AddData/AddData";
 import Modal from "../../components/Modal/Modal";
+import "./CreditScores.scss";
 
 
 
@@ -73,13 +74,14 @@ const CreditScorePage = () => {
     }
 
     return ( 
-        <div>
-            <h2>Credit Score Details</h2>
+        <div className="pageDefault__holder">
+            <h2 className="headerDefault font--title">Credit Score Details</h2>
             {creditScore ? (
-                <div>
+                <div className="pageDefault__listHolder font--normal creditData">
+                    <div className="creditData__holder">
                     <p>Current Credit Score: {creditScore.current_score}</p>
                     <p>Credit Score History:</p>
-                    <ul>
+                    <ul className="pagePadding pageDefault__listHolder">
                         {Array.isArray(creditScore.score_history) ? (
                             creditScore.score_history.map((historyItem, index) => (
                                 <li key={index}>
@@ -91,11 +93,12 @@ const CreditScorePage = () => {
                         )}
                     </ul>
                     <p>Credit Usage: {creditScore.credit_utilization}</p>
-                    <div onClick={() => {handleCreditScoreDelete(creditScore.score_id)}}>
-                        <img src={Deletebtn} alt="delete_button" /> Delete This Credit Score
                     </div>
-                    <div onClick={() => {handleCreditScoreEdit(creditScore)}}>
-                        <img src={Edit} alt="edit_button" /> Edit This Credit Score
+                    <div className="details__delete" onClick={() => {handleCreditScoreDelete(creditScore.score_id)}}>
+                        <img className="details__icon" src={Deletebtn} alt="delete_button" /> Delete This Credit Score
+                    </div>
+                    <div className="details__edit" onClick={() => {handleCreditScoreEdit(creditScore)}}>
+                        <img className="details__icon" src={Edit} alt="edit_button" /> Edit This Credit Score
                     </div>
                     
                     {/* Modal for Editing Credit Score */}

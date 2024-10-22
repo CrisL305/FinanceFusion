@@ -9,6 +9,19 @@
     box-sizing: border-box;
 }
 
+body{
+    background-color: lighten($FinanceFusion-DarkGray, 15%);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: $FinanceFusion-WarmGold;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    width: 100%;
+    text-align: center;
+}
+
 .pagePadding{
     //mobile
     padding: 1em 0.5em 0;
@@ -22,5 +35,82 @@
         max-width: 1440px;
         margin-left: auto;
         margin-right: auto;
+    }
+}
+
+.textDefault{
+    margin-bottom: 4em;
+
+    &__title{
+        margin-bottom: 1em;
+        font-size: 2em;
+    }
+    &__paragraph{
+        font-size: 2em;
+        margin:0 0 1em 0 !important;
+    }
+}
+
+.imageDefault{
+    height: 1em;
+}
+
+.pageDefault{
+        &__holder{
+            padding: 1em 2em;
+        }
+        &__listHolder{
+            list-style: none;
+            font-size: 1em;
+            @include tablet
+           { display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;}
+        }
+        &__list{
+            margin-bottom: 1em;
+            @include tablet{
+                font-size: 1.25em;
+            }
+            @include desktop {
+                font-size: 2.5vw
+            }
+        }
+}
+
+.headerDefault{
+    margin-top: 1em;
+    font-size: 1.25em;
+    margin-bottom: 0;
+    @include tablet{
+        font-size: 2.5em;
+        margin-bottom: 0px;
+    }
+    @include tablet{
+        font-size: 6vw;
+    }
+}
+
+.details{
+    &__icon{
+        position: relative;
+        top: 4px;
+        right: 4px;
+        height: 1.25em;
+        @include tablet
+        {position: relative;
+        top: 4px;
+        right: 4px;
+        height: 1em;} 
+    }
+    &__delete{
+        @include tablet{
+            font-size: 3vw;
+        }
+    }
+    &__edit{
+        @include tablet 
+        {font-size: 3vw;}
     }
 }

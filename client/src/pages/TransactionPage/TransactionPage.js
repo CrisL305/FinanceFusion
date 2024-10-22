@@ -6,7 +6,7 @@ import DeleteBtn from '../../assets/icons/delete.svg';
 import Modal from "../../components/Modal/Modal";
 import EditData from "../../components/EditData/EditData";
 import Edit from '../../assets/icons/arrow_drop_down.svg';
-
+import Graph from "../../components/Graph/Graph";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -27,7 +27,7 @@ const TransactionPage = () => {
   //Fetch transactions for the current account
   const fetchTransactions = async () => {
     try {
-      const response = await axios.get(`${SERVER_URL}/transactions/account/${id}`)
+      const response = await axios.get(`${SERVER_URL}/transactions/account/${id}`);
       setTransactions(response.data);
     } catch (error) {
       console.error('Error fetching transactions:', error);
@@ -63,19 +63,46 @@ const TransactionPage = () => {
     setSelectedTransaction(null);
   }
 
+  //Data Transaction Transformation for Graph
+  const transformTransactionData = (transactions) =>  {
+    const groupedData = transactions.reduce((acc, transaction) => {
+      const date = new Date(transaction.date).toLocaleDateString('en-US');
+      if (!acc[date]) {
+        acc[date] = 0;
+      }
+      acc[date] += Number(transaction.amount);
+      return acc;
+    }, {});
+
+    return Object.entries(groupedData).map(([date, total]) => ({
+      date,
+      total,
+    }));
+  };
+
+  const transformedData = transformTransactionData(transactions).sort((a, b) => new Date(a.date) - new Date(b.date));
+
     return (
         <>
-          <div>
-            <h2>Account Transactions</h2>
-            <ul>
-              {transactions.map((transaction) => (
-                <li key={transaction.transaction_id}>
+          <div className="pageDefault__holder">
+            <h2 className="headerDefault font--title">Account Transactions</h2>
+            <Graph
+            type="line"
+            data={transformedData}
+            dataKey="total"
+            xAxisKey="date"
+          />
+            <ul className="pagePadding font--normal pageDefault__listHolder">
+              {transactions
+              .sort((a, b) => new Date(a.date) - new Date(b.date))
+              .map((transaction) => (
+                <li className="pageDefault__list" key={transaction.transaction_id}>
                     {transaction.category}: ${transaction.amount} - {transaction.description} 
                     (Date: {new Date(transaction.date).toLocaleDateString()})
-                    <div onClick={() => {handleTransactionClick(transaction.transaction_id)}}>
-                      <img src={DeleteBtn} alt="delete button" />Delete This Transaction</div>
-                    <div onClick={() => {handleEditClick(transaction)}}>
-                      <img src={Edit} alt="edit button" />Edit this transaction</div>
+                    <div className="details__delete" onClick={() => {handleTransactionClick(transaction.transaction_id)}}>
+                      <img className="details__icon" src={DeleteBtn} alt="delete button" />Delete This Transaction</div>
+                    <div className="details__edit" onClick={() => {handleEditClick(transaction)}}>
+                      <img className="details__icon" src={Edit} alt="edit button" />Edit this transaction</div>
                 </li>
               ))}
             </ul>

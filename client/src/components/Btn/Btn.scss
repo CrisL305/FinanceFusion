@@ -1,12 +1,18 @@
 @use "../../styles/partials/variables" as *;
 
 .btnStyle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     margin: 0 0.5em;
-    height: 2em;
+    height: 2.5em;
+    font-size: 1.5em;
     border-radius: 16px;
     background-color: $FinanceFusion-CoolWhite;
     border: none;
+    text-decoration: none;
+    color: black;
     &:hover {
         cursor: pointer;
         background-color: $FinanceFusion-DarkGray;

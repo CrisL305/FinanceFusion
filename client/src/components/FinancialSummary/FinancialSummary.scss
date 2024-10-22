@@ -1,0 +1,97 @@
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.financialSummary{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    &__title{
+        @include desktop{
+        font-size: 4vw;}
+    }
+}
+
+.summaryCard {
+    background-color: $FinanceFusion-MidnightNavy;
+    padding: 1em;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    height: 8em;
+    width: 6em;
+    margin: 0.25em;
+    @include tablet{
+        height: 15em;
+        width: 10em;
+    }
+    @include desktop{
+        height: 25em;
+        width: 15em;
+    }
+    &__title{
+        font-size: 0.8em;
+        @include tablet{
+            font-size: 1.25em;
+        }
+        @include desktop{
+            font-size: 2.25em;
+        }
+    }
+    &__paragraphs{
+        font-size: 0.6em;
+        color: $FinanceFusion-CoolWhite;
+        text-align: center;
+        @include tablet{
+            font-size: 1em;
+        }
+        @include desktop{
+            font-size: 2em;
+        }
+        &--budget{
+            font-size: 0.5em;
+            margin-bottom: 0.5em;
+            margin-top: -1.25em;
+            @include tablet{
+                font-size: 1em;
+                margin-top: -0.25em;
+            }
+            @include desktop{
+                font-size: 1.5em;
+                margin-top: 0.25em;
+            }
+        }
+        &--credit{
+            font-size: 0.55em;
+            @include tablet{
+                font-size: 1em;
+            }
+            @include desktop{
+                font-size: 1.5em;
+            }
+        }
+    }
+}
+
+.progressBar{
+    &__progressBar{
+        background-color: $FinanceFusion-MidnightNavy;
+        border-radius: 8px;
+        height: 10px;
+        overflow: hidden;
+        margin: 0.5em 0;
+    }
+    &__progress{
+        background-color: $FinanceFusion-WarmGold;
+        height: 1em;
+        margin: -0.5em;
+        margin-bottom: 0.5em;
+    }
+}
+
+.budgetGreen{
+    color: green;
+}
+
+.budgetRed{
+    color: red;
+}

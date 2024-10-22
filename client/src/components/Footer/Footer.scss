@@ -5,11 +5,13 @@
     flex-direction: column;
     background-color: $FinanceFusion-MidnightNavy;
     color: $FinanceFusion-CoolWhite;
-    height: 7.5em;
-
+    height: 12em;
+    margin-top: 2em;
+    justify-content: center;
+    align-items: center;
+    
     @include tablet {
         flex-direction: row;
-        height: 12em;
     }
     &--spacer{
         padding-right: 1em;
@@ -21,6 +23,7 @@
         }
     }
     &--text{
+        text-align: center;
         padding-top: 0.75em;
         font-size: 0.75em;
         @include tablet{
@@ -29,6 +32,8 @@
     }
     &__holder{
         display: flex;
+        justify-content: center;
+        align-items: center;
         &--logo{
             width: 100%;
             margin-left: auto;

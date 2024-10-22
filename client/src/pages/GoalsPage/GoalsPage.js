@@ -6,6 +6,7 @@ import EditData from "../../components/EditData/EditData";
 import DeleteBtn from "../../assets/icons/delete.svg";
 import Edit from "../../assets/icons/arrow_drop_down.svg";
 import Modal from "../../components/Modal/Modal";
+import Graph from "../../components/Graph/Graph";
 
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
@@ -64,29 +65,47 @@ const GoalsPage = ( ) => {
     }
 
     const goalsFormFields = [
-      {name: 'goal_type', label: 'Goal_type', type: 'text'},
-      {name: 'target_amount', label: 'Target_amount', type: 'number'},
-      {name: 'current_savings', label: 'Current_savings', type: 'number'},
+      {name: 'goal_type', label: 'Goal', type: 'text'},
+      {name: 'target_amount', label: 'Target Amount', type: 'number'},
+      {name: 'current_savings', label: 'Current Savings', type: 'number'},
       {name: 'deadline', label: 'Deadline', type: 'date'}
     ];
   
+    //Data Goals Transformation for Graph
+    const transformGoalData = (goals) => {
+      return goals.map((goal) => ({
+        name: goal.goal_type,
+        saved: Number(goal.current_savings),
+        target: Number(goal.target_amount),
+      }));
+    };
+
+    const chartData = transformGoalData(goals);
+    console.log(chartData);
+
       return (
           <>
-            <div>
-              <h2>Goals</h2>
+            <div className="pageDefault__holder">
+              <h2 className="headerDefault font--title">Goals</h2>
+              <Graph
+                type='bar'
+                data={chartData}
+                dataKey='saved'
+                xAxisKey='name'
+              />
               {goals ? (
                 <>
-                <ul>
+                <ul className="pagePadding font--normal pageDefault__listHolder">
                 {goals.map((goal) => (
-                    <li key={goal.goal_id}>
+                    <li className="pageDefault__list" key={goal.goal_id}>
                         <p>Goal: {goal.goal_type}</p>
                     <p>Goal Amount: {goal.target_amount}</p>
                     <p>Current Savings: ${goal.current_savings}</p>
-                    <p>Deadline: {goal.deadline}</p>
-                    <div onClick={() => {handleGoalDelete(goal.goal_id)}}>
-                      <img src={DeleteBtn} alt="delete button" />Delete This Goal</div>
-                    <div onClick={() => {handleGoalEdit(goal)}}>
-                      <img src={Edit} alt="edit button" />Edit this Goal</div>
+                    <p>Deadline: {new Date(goal.deadline).toLocaleDateString('en-US')}</p>
+                    <div className="details__delete" onClick={() => {handleGoalDelete(goal.goal_id)}}>
+                      <img className="details__icon" src={DeleteBtn} alt="delete button" />Delete This Goal</div>
+                    <div className="details__edit" onClick={() => {handleGoalEdit(goal)}}>
+                      <img className="details__icon" src={Edit} alt="edit button" />Edit this Goal</div>
                     </li>
                 ))}
                 </ul>

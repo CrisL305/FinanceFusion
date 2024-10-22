@@ -1,0 +1,30 @@
+@use "../../styles/partials/mixins" as *;
+.profilePage{
+    &__btn{
+        width: 50%;
+        font-size: 0.75em;
+    }
+
+    &__holder{
+        display: flex;
+        justify-content: center;
+    }
+    &__userText{
+        font-size: 1em;
+        width: 50%;
+        @include tablet{
+            font-size: 1.5em;
+        }
+    }
+    &__userProfile{
+        height: 5em;
+    }
+}
+
+.users{
+    @include tablet{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

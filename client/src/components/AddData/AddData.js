@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import "./AddData.scss";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -51,13 +52,15 @@ const AddData = ({ contentName, formFields, endpoint, idType, idValue, onDataAdd
         };
     return ( 
         <>
-            <div className="addData">
-                <h3>Add new {contentName}</h3>
+            <div className="addData__holder pagePadding font--normal">
+                <div className="addData">
+                <h3 className="font--title">Add New {contentName}</h3>
                 <form onSubmit={handleSubmit}>
                     {formFields.map((field) => (
                         <div key={field.name}>
-                            <label htmlFor={field.name}>{field.label}</label>
+                            <label className="addData__label" htmlFor={field.name}>{field.label}</label>
                             <input
+                                className="addData__input"
                                 type={field.type || 'text'}
                                 id={field.name}
                                 name={field.name}
@@ -69,11 +72,13 @@ const AddData = ({ contentName, formFields, endpoint, idType, idValue, onDataAdd
                     ))}
 
                     {error && <p style={{ color: 'red' }}>{error}</p>}
-
-                    <button type="submit" disabled={loading}>
+                    <div className="addData__holder">
+                    <button className="addData__button font--normal" type="submit" disabled={loading}>
                         {loading ? 'Adding...' : 'Add Data'}
                     </button>
+                    </div>
                 </form>
+                </div>
             </div>
         </>
      );

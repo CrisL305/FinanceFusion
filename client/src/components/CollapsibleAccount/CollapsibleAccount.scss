@@ -1,0 +1,18 @@
+@use "../../styles/partials/mixins" as *;
+
+.collapsibleAccount{
+    &__icon{
+        @include tablet 
+        {height: 0.9em;}
+    }
+}
+
+.account{
+    &__details{
+        font-size: 1em;
+    }
+    &__icon{
+        position: relative;
+        top: 6px;
+    }
+}
