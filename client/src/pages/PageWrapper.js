@@ -18,7 +18,7 @@ import { UserContext, UserProvider } from "../context/UserContext";
 
 const PageWrapper = () => {
     const location = useLocation();
-    const { id } = useContext(UserContext); 
+    const id  = useContext(UserContext); 
 
     //Defines the pages where the bottom navigation should appear
     const showNavBar = [
@@ -30,10 +30,7 @@ const PageWrapper = () => {
         "/creditscores"
     ].some((path) => location.pathname.startsWith(path));
 
-    console.log(showNavBar);
-    console.log(location.pathname);
-
-    return (  
+      return (  
         <>
         <Header />
         <UserProvider>

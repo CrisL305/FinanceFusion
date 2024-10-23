@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AddData from '../../components/AddData/AddData'
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -7,32 +7,54 @@ import Modal from "../../components/Modal/Modal";
 import EditData from "../../components/EditData/EditData";
 import Edit from '../../assets/icons/arrow_drop_down.svg';
 import Graph from "../../components/Graph/Graph";
+import { UserContext } from "../../context/UserContext";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
-const transactionFormFields = [
+const transactionFormFields = (accounts) => [
+  {
+    name: "account_id",
+    label: "Account",
+    type: "select",
+    options: accounts.map((account) => ({
+      value: account.account_id,
+      label: `${account.bank_name} (${account.account_type})`,
+    })),
+  },
   {name: 'amount', label: 'Amount', type: 'number'},
   {name: 'transaction_type', label: 'Transaction Type', type: 'text'},
   {name: 'category', label: 'Category', type: 'text'},
   {name: 'description', label: 'Description', type: 'text'},
   {name: 'date', label: 'Date', type: 'date'}
-]
+];
 
 const TransactionPage = () => {
   const { id } = useParams();
+  const { setId } = useContext(UserContext);
   const [transactions, setTransactions] = useState([]);
+  const [accounts, setAccounts] = useState([]);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   //Fetch transactions for the current account
   const fetchTransactions = async () => {
     try {
-      const response = await axios.get(`${SERVER_URL}/transactions/account/${id}`);
+      const response = await axios.get(`${SERVER_URL}/transactions/${id}`);
       setTransactions(response.data);
     } catch (error) {
       console.error('Error fetching transactions:', error);
     }
   };
+
+    //Fetch accounts for the dropdown
+    const fetchAccounts = async () => {
+      try {
+        const response = await axios.get(`${SERVER_URL}/accounts/${id}`);
+        setAccounts(response.data);
+      } catch (error) {
+        console.error('Error fetching transactions:', error);
+      }
+    };
 
   //Delete transaction for the current account
   const deleteTransactions = async (transaction_id) =>{
@@ -44,7 +66,9 @@ const TransactionPage = () => {
     }
   }
   useEffect(() => {
+    setId(id);
     fetchTransactions();
+    fetchAccounts();
   }, [id]);
 
   const handleTransactionClick = (transactionId) => {
@@ -113,7 +137,7 @@ const TransactionPage = () => {
                 <EditData
                   idType="transaction_id"
                   idValue={selectedTransaction.transaction_id}
-                  formFields={transactionFormFields}
+                  formFields={transactionFormFields(accounts)}
                   endpoint={`/transactions/account/${id}`}
                   initialData={selectedTransaction}
                   onDataUpdated={() => {
@@ -127,7 +151,7 @@ const TransactionPage = () => {
             <AddData
               idType="account_id"
               idValue={id}
-              formFields={transactionFormFields}
+              formFields={transactionFormFields(accounts)}
               endpoint="/transactions/account/"
               onDataAdded={fetchTransactions}
             />

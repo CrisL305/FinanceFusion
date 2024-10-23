@@ -5,10 +5,7 @@ import "./EditData.scss";
 const EditData = forwardRef(({ idType, idValue, endpoint, initialData, formFields, onDataUpdated }, ref) => {
 
     const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-    const [formData, setFormData] = useState({
-        ...initialData,
-    });
-    
+    const [formData, setFormData] = useState({...initialData});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -31,16 +28,14 @@ const EditData = forwardRef(({ idType, idValue, endpoint, initialData, formField
 
     //Helper function to format date to "yyyy-MM-dd"
     const formatDate = (dateString) => {
-        const date = new Date(dateString).toISOString().split('T')[0];
-        return date
+        return new Date(dateString).toISOString().split('T')[0];
     }
 
     //Handle form input changes
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value}));
+        console.log(formData);
     };
 
     //Handle for submission for editing the data
@@ -50,11 +45,11 @@ const EditData = forwardRef(({ idType, idValue, endpoint, initialData, formField
         setError('');
 
         try{
-
             const dataToSubmit = {
                 [idType]: idValue,
                 ...formData
             };
+            console.log(dataToSubmit);
 
             formFields.forEach((field) => {
                 if (field.name === 'score_history' && formData[field.name]) {
@@ -80,10 +75,28 @@ const EditData = forwardRef(({ idType, idValue, endpoint, initialData, formField
         <div className="editData__holder font--normal">
             <h3 className="editData__title font--title">Edit Data</h3>
             <form className="editData__form" ref={ref} onSubmit={handleSubmit}>
-                {formFields.map((field)=>(
+                {formFields.map((field) => (
                     <div className="editData__column" key={field.name}>
-                        <label className="editData__label" htmlFor={field.name}>{field.label}</label>
-                        {field.name === 'score_history' ? (
+                        <label className="editData__label" htmlFor={field.name}>
+                            {field.label}
+                            </label>
+                        {field.type === 'select' ? (
+                            <select
+                                className="editData__input"
+                                id={field.name}
+                                name={field.name}
+                                value={formData[field.name] || ""}
+                                onChange={handleChange}
+                                required
+                            >
+                                <option value="">Select {field.label}</option>
+                                {field.options.map((option) => (
+                                    <option key={option.value} value={option.value}>
+                                        {option.label}
+                                    </option>
+                                ))}
+                            </select>
+                        ): field.name === 'score_history' ? (
                             <textarea 
                                 className="editData__input font--normal"
                                 id={field.name}
@@ -104,6 +117,7 @@ const EditData = forwardRef(({ idType, idValue, endpoint, initialData, formField
                             required
                         />
                         )}
+
                     </div>
                 ))}
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Deletebtn from "../../assets/icons/delete.svg";
 import Edit from "../../assets/icons/arrow_drop_down.svg";
@@ -7,13 +7,13 @@ import EditData from "../../components/EditData/EditData";
 import AddData from "../../components/AddData/AddData";
 import Modal from "../../components/Modal/Modal";
 import "./CreditScores.scss";
-
-
+import { UserContext } from "../../context/UserContext";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const CreditScorePage = () => {
     const { id } = useParams();
+    const { setId } = useContext(UserContext);
     const [creditScore, setCreditScore] = useState(null);
     const [selectedCreditScore, setSelectedCreditScore] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -40,6 +40,7 @@ const CreditScorePage = () => {
 
     useEffect(() => {
         fetchCreditScore();
+        setId(id);
     }, [id]);
 
     //Delete Credit Score

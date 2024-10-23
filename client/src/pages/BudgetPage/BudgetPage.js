@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DeleteBtn from "../../assets/icons/delete.svg";
 import Edit from "../../assets/icons/arrow_drop_down.svg";
@@ -7,11 +7,13 @@ import EditData from "../../components/EditData/EditData";
 import AddData from "../../components/AddData/AddData";
 import axios from "axios";
 import Graph from "../../components/Graph/Graph";
+import { UserContext } from "../../context/UserContext";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const BudgetPage = () => {
     const { id } = useParams();
+    const { setId } = useContext(UserContext);
     const [budgets, setBudgets] = useState([]);
     const [selectedBudget, setSelectedBudget] = useState(null);
     const [totalBudgeted, setTotalBudget] = useState(0);
@@ -32,7 +34,6 @@ const BudgetPage = () => {
             setBudgets(budgetResponse.data);
             setTotalBudget(budgetResponse.data.reduce((acc, budget) => acc + Number(budget.budgeted_amount), 0));
             setLoading(false);
-            console.log(totalBudgeted);
         } catch (error) {
             alert('Error fetching budget details', error);
             setLoading(false);
@@ -42,6 +43,7 @@ const BudgetPage = () => {
 
     useEffect(() => {
         fetchBudgets();
+        setId(id)
     }, [id])
 
     //Delete budget for the current user

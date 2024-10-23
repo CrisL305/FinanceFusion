@@ -1,9 +1,30 @@
 import Btn from "../../components/Btn/Btn";
 import Phone from "../../assets/images/SVG/Phone.svg";
+import videoTabDesk from "../../assets/videos/Financial_Management_Made_Easy.mp4";
 import "./HomePage.scss";
 import video from "../../assets/videos/Financial_Management_Made_Easy_Mobile.mp4";
+import { useEffect, useState } from "react";
 
 const HomePage = () => {
+
+    const [videoSource, setVideoSource] = useState("");
+
+    //Detects the screen size and changes the video source
+    const updateVideoSource = () => {
+        const screenWidth = window.innerWidth;
+        if (screenWidth >= 768) {
+            setVideoSource(videoTabDesk);
+        } else {
+            setVideoSource(video);
+        }
+    };
+
+    useEffect(() => {
+        updateVideoSource();
+        window.addEventListener("resize", updateVideoSource);
+        return () => window.removeEventListener("resize", updateVideoSource);
+    }, []);
+
     return ( 
         <>
         <section className="textDefault pagePadding">

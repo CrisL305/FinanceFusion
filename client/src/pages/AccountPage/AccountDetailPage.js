@@ -36,7 +36,7 @@ const AccountDetailsPage = () => {
         const fetchUserData = async () => {
             try{
     //fetch user transactions
-    const transactionsResponse = await axios.get(`${SERVER_URL}/transactions/account/${id}`);
+    const transactionsResponse = await axios.get(`${SERVER_URL}/transactions`);
     setTransactions(transactionsResponse.data);
         } catch (error) {
             console.log(error)
