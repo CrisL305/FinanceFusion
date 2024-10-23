@@ -59,7 +59,23 @@ const AddData = ({ contentName, formFields, endpoint, idType, idValue, onDataAdd
                     {formFields.map((field) => (
                         <div key={field.name}>
                             <label className="addData__label" htmlFor={field.name}>{field.label}</label>
-                            <input
+                            {field.type === "select" ? (
+                                <select
+                                    className="addData__input"
+                                    id={field.name}
+                                    name={field.name}
+                                    onChange={handleChange}
+                                    required
+                                >
+                                    <option value="">Select {field.label}</option>
+                                    {field.options.map((option) => (
+                                        <option key={option.value} value={option.value}>
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            ): (
+                                <input
                                 className="addData__input"
                                 type={field.type || 'text'}
                                 id={field.name}
@@ -68,6 +84,7 @@ const AddData = ({ contentName, formFields, endpoint, idType, idValue, onDataAdd
                                 onChange={handleChange}
                                 required
                             />
+                            )}
                         </div>
                     ))}
 

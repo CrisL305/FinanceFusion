@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AddData from '../../components/AddData/AddData'
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -7,12 +7,13 @@ import DeleteBtn from "../../assets/icons/delete.svg";
 import Edit from "../../assets/icons/arrow_drop_down.svg";
 import Modal from "../../components/Modal/Modal";
 import Graph from "../../components/Graph/Graph";
-
+import { UserContext } from "../../context/UserContext";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const GoalsPage = ( ) => {
     const { id } = useParams();
+    const { setId } = useContext(UserContext);
     const [goals, setGoals] = useState([]);
     const [selectedGoal, setSelectedGoal] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -42,6 +43,7 @@ const GoalsPage = ( ) => {
 
     useEffect(() => {
       fetchGoals();
+      setId(id);
     }, [id]);
 
     const handleGoalDelete = (goal_id) => {
@@ -81,7 +83,6 @@ const GoalsPage = ( ) => {
     };
 
     const chartData = transformGoalData(goals);
-    console.log(chartData);
 
       return (
           <>

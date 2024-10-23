@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AddData from '../../components/AddData/AddData'
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -8,11 +8,13 @@ import Edit from "../../assets/icons/arrow_drop_down.svg";
 import Modal from "../../components/Modal/Modal";
 import Chevron from "../../assets/icons/chevron.svg";
 import "./LoanPage.scss";
+import { UserContext } from "../../context/UserContext";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const LoanPage = () => {
     const { id } = useParams();
+    const { setId } = useContext(UserContext);
     const [loans, setLoans] = useState([]);
     const [selectedLoan, setSelectedLoan] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -71,6 +73,7 @@ const LoanPage = () => {
 
     useEffect(() => {
       fetchLoans();
+      setId(id);
     }, [id]);
 
     const toggleLoan = (loan_id) => {
